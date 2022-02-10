@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV !== 'production'){
     require('dotenv').config()
 }
-
 const express = require('express')
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
@@ -16,7 +15,7 @@ const initializePassport = require('./passport-config')
 initializePassport(passport,
     username => user.findOne({username : username}),
     id => user.findOne({_id : id}))
-// user.find(user => user.username === username)) 
+    // user.find(user => user.username === username)) 
 const indexRouter = require('./routes/index')
 // const adminRouter = require('./routes/admins')
 
@@ -54,7 +53,6 @@ app.use('/', indexRouter)
 // app.use('/admin', adminRouter)
 
 
-
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
       return next()
@@ -69,5 +67,7 @@ function checkNotAuthenticated(req, res, next) {
     }
     next()
   }
+
+app.locals.getFlag = function(country) {}
 
 app.listen(process.env.PORT || 3000)

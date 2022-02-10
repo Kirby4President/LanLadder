@@ -23,12 +23,12 @@ async function initialize(passport, getUserByUsername, getUserById){
         // const currentUser = await user.findOne({username : username})
         // await getUserByUsername(username, currentUser)
         console.log("current user variable:", currentUser)
-        if (currentUser.username == null) {
+        if (currentUser == null) {
             return done(null, false, { message : "No user with that username"})
         }
 
         try{
-            console.log(password, currentUser.password)
+            // console.log(password, currentUser.password)
             // console.log(user)
             if (await bcrypt.compare(password, currentUser.password)) {
                 return done(null, currentUser)
@@ -42,9 +42,9 @@ async function initialize(passport, getUserByUsername, getUserById){
     passport.use(new LocalStrategy({ usernameField : 'loginUsername', passwordField : 'loginPassword' }, authenticateUser))
     passport.serializeUser((user, done) => done(null, user.id))
     passport.deserializeUser(async (id, done) => {
-        console.log(id)
+        // console.log(id)
         test = await getUserById(id)
-        console.log(test)
+        // console.log(test)
         return done(null, test)
     })
 }

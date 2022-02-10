@@ -1,0 +1,12 @@
+:root {
+    --title-font-size: 3rem;
+    --title-font-weight: bold;
+    --nav-link-font-weight: 300;
+  }
+
+.header-title{
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-size: var(--title-font-size);
+    font-weight: var(--title-font-weight);
+}

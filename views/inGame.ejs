@@ -1,4 +1,10 @@
+
+<% try{ %>
+    <%= user.username %>
+    <% } catch {%>
+<% } %>
 <script defer src="javascripts/index.js"></script>
+<script defer src="javascripts/sseMessages.js"></script>
 
 <!-- <script >
     console.log("logged in: " + locals.loggedIn)
@@ -7,32 +13,24 @@
     }
 </script> -->
 
-<div  class="hidden buttons-div logged-in">
-    Hello 
-    <button onclick="queue()">FIND OPPONENT</button>
+<div class="buttons-div logged-in">
+
+    <p id="message">Report your results at the admin table</p>
+    <button class="btn btn-queue" id="queue-btn" onclick="queue('queue-btn');" disabled>
+        Playing <%= user.opponent %></button>
 
     <form class = "btn" action="/logout?_method=delete" method="POST">
-        <button type="submit">Log out</button>
+        <button class="btn btn-danger" type="submit">Log out</button>
     </form>
 </div>
 
-<div class="buttons-div logged-out">
-    
-    <% if (messages.error) { %>
-        <%- messages.error + '<br>'%>
-        <% } %> 
-    
-    <% if (locals.errorMessage != null) { %>
-        <%- errorMessage + '<br>'%>
-    <% } %>
-
-    <button class="btn btn-primary signUp" onclick="toggleHidden('signUpForm'); focusField('username')">Sign up</button>
-    <button class="btn btn-primary" onclick="toggleHidden('logInForm'); focusField('loginUsername')">Log in</button>
+<div class="hidden buttons-div logged-out">
+    <button onclick="toggleHidden('signUpForm')">Sign up</button>
     
     <form id="signUpForm" class="hidden account-form" action="/register" method="POST">
         <div>
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" required= true value="<%= user.username %>">           
+            <input type="text" id="username" name="username" required= true>           
             <!-- value="< %= user.username %>" -->
         </div>
         
@@ -46,15 +44,19 @@
             <input type="email" id="email" name="email">
         </div>
         
-        <button class="btn btn-primary" type="submit">Create account</button>
+        <button type="submit">Create account</button>
     </form>
     
+    <button onclick="toggleHidden('logInForm')">Log in</button>
     
+    <% if (messages.error) { %>
+        <%= messages.error %>
+        <% } %> 
         
     <form id="logInForm" class="hidden account-form" action="/login" method="POST">
         <div>
             <label for="loginUsername">Username</label>
-            <input type="text" id="loginUsername" name="loginUsername" value="<%= user.username %>">
+            <input type="text" id="loginUsername" name="loginUsername">
         </div>
         
         <div>
@@ -62,14 +64,15 @@
             <input type="password" id="loginPassword" name="loginPassword">
         </div>
         
-        <button class="btn btn-primary" type="submit">Log in</button>
+        <button type="submit">Log in</button>
     </form>
     
-    <form class="hidden" action="/queue", method="GET">
+    <form action="/queue", method="GET">
         <button type="submit">Queue </button>
     </form>
     
-    <br> <br>
-    <button class="btn btn-queue" disabled>FIND OPPONENT</button>
+
+    <br>
+    <button disabled>AJAX QUEUE</button>
 </div>
 <hr/>
